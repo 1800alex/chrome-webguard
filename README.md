@@ -1,5 +1,7 @@
 A simple Chrome extension called "Website Whitelist Guard" that allows parents to restrict access to websites using a simple password protected options page.
 
+I highly recommend installing the uBlock Origin Lite Chrome extension along side this further quite down ads on busy websites.
+
 ## 🛡️ **Key Features:**
 
 ### **Whitelist Monitoring:**
