@@ -32,7 +32,8 @@ A simple Chrome extension called "Website Whitelist Guard" that allows parents t
 2. Open Chrome and go to `chrome://extensions/`
 3. Enable "Developer mode" (top right toggle)
 4. Click "Load unpacked" and select your folder
-5. The extension will appear in your toolbar
+5. You should see Website Whitelist Guard listed under all All Extensions. Click Details and enable the 'Allow in Incognito' checkbox to ensure the extension always runs.
+6. The extension will appear in your toolbar under extensions (and also in Incognito mode)
 
 ## 🚀 **How to Use:**
 
