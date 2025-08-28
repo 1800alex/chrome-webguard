@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   const extensionEnabled = document.getElementById("extensionEnabled");
+  const blockImages = document.getElementById("blockImages");
+  const blockVideos = document.getElementById("blockVideos");
   const updateStatusBtn = document.getElementById("updateStatusBtn");
 
   const newPassword = document.getElementById("newPassword");
@@ -119,12 +121,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // Load current configuration
   function loadConfiguration() {
     chrome.storage.sync.get(
-      ["isEnabled", "whitelist", "redirectUrl", "password"],
+      [
+        "isEnabled",
+        "whitelist",
+        "redirectUrl",
+        "password",
+        "blockImages",
+        "blockVideos",
+      ],
       (result) => {
         const isEnabled = result.isEnabled !== false;
         const whitelist = result.whitelist || [];
         const redirectUrlValue = result.redirectUrl || "https://www.google.com";
         const hasPassword = result.password && result.password !== "";
+        const shouldBlockImages = result.blockImages === true;
+        const shouldBlockVideos = result.blockVideos === true;
 
         // Update summary
         currentStatus.textContent = isEnabled ? "Enabled" : "Disabled";
@@ -135,6 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update form fields
         redirectUrl.value = redirectUrlValue;
         extensionEnabled.checked = isEnabled;
+        blockImages.checked = shouldBlockImages;
+        blockVideos.checked = shouldBlockVideos;
 
         // Update whitelist display
         renderWhitelist(whitelist);
@@ -220,15 +233,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update extension enabled/disabled status
   function updateExtensionStatus() {
     const newStatus = extensionEnabled.checked;
+    const shouldBlockImages = blockImages.checked;
+    const shouldBlockVideos = blockVideos.checked;
 
     // If trying to disable and password is set, require authentication
     chrome.storage.sync.get(["isEnabled", "password"], (result) => {
-      chrome.storage.sync.set({ isEnabled: newStatus }, () => {
-        showMessage(
-          `Protection ${newStatus ? "enabled" : "disabled"} successfully`
-        );
-        loadConfiguration();
-      });
+      chrome.storage.sync.set(
+        {
+          isEnabled: newStatus,
+          blockImages: shouldBlockImages,
+          blockVideos: shouldBlockVideos,
+        },
+        () => {
+          showMessage(`Protection settings updated successfully`);
+          loadConfiguration();
+        }
+      );
     });
   }
 
@@ -334,6 +354,8 @@ document.addEventListener("DOMContentLoaded", function () {
           whitelist: ["google.com", "github.com"],
           redirectUrl: "https://www.google.com",
           isEnabled: true,
+          blockImages: false,
+          blockVideos: false,
         },
         () => {
           showMessage("All settings reset to default");

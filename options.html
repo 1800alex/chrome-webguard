@@ -220,9 +220,26 @@
           </label>
           <div class="help-text">When disabled, all websites will be accessible regardless of whitelist</div>
         </div>
+
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="blockImages" style="width: auto;">
+            Block Images from Non-Whitelisted Sources
+          </label>
+          <div class="help-text">Hide images (img tags) that load from domains not on your whitelist</div>
+        </div>
+        
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="blockVideos" style="width: auto;">
+            Block Videos from Non-Whitelisted Sources
+          </label>
+          <div class="help-text">Hide videos (video tags) that load from domains not on your whitelist</div>
+        </div>
+        
         <button class="btn btn-success" id="updateStatusBtn">Update Protection Status</button>
       </div>
-      
+        
       <!-- Current Configuration Summary -->
       <div class="current-config">
         <h3>📊 Current Configuration</h3>
